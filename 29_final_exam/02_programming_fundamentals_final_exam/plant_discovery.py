@@ -213,15 +213,24 @@ Rate: Arnoldii - 3
 Rate: Woodii - 5
 Update: Woodii - 5
 Reset: Arnoldii
-Exhibition
-"""
+Exhibition"""
 input2 = """2
 Candelabra<->10
 Oahu<->10
 Exhibition"""
-input3 = """"""
+input3 = """3
+Arnoldii<->4
+Woodii<->7
+Welwitschia<->2
+Rate: Woodii - 10
+Rate: Welwitschia - 7
+Rate: Arnoldii - 3
+Rate: Woodii - 5
+Update: Woodii - 5
+Reset: Arnoldii
+Exhibition"""
 
-sys.stdin = StringIO(input1)
+sys.stdin = StringIO(input2)
 
 n = int(input())
 plants = {}
@@ -241,20 +250,36 @@ while not command == "Exhibition":
     if action == "Rate":
         second_command_split = command_split[1].split(" - ")
         plant = second_command_split[0]
-        rating = int(second_command_split[1])
-        plants[plant].append(rating)
+        if plant not in plants:
+            print("error")
+        else:
+            rating = int(second_command_split[1])
+            plants[plant].append(rating)
 
     elif action == "Update":
         second_command_split = command_split[1].split(" - ")
         plant = second_command_split[0]
-        new_rarity = int(second_command_split[1])
-        plants[plant].insert(new_rarity, 0)
-        plants[plant].pop(1)
+        if plant not in plants:
+            print("error")
+        else:
+            new_rarity = int(second_command_split[1])
+            plants[plant].pop(0)
+            plants[plant].insert(0,new_rarity)
 
     elif action == "Reset":
         second_command_split = command_split[1].split(" - ")
         plant = second_command_split[0]
-        plants[plant] = plants[plant][:1]
+        if plant not in plants:
+            print("error")
+        else:
+            plants[plant] = plants[plant][:1]
 
     command = input()
-print(plants)
+print("Plants for the exhibition:")
+for key,value in plants.items():
+
+    if len(plants[key][1:]) == 0:
+        print(f"- {key}; Rarity: {value[0]}; Rating: 0.00")
+    else:
+
+        print(f"- {key}; Rarity: {value[0]}; Rating: {sum(plants[key][1:])/ len(plants[key][1:]):.2f}")
