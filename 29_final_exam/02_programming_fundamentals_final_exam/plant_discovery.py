@@ -1,26 +1,26 @@
-#
-# import sys
-# from io import StringIO
-#
-# input1 = """3
-# Arnoldii<->4
-# Woodii<->7
-# Welwitschia<->2
-# Rate: Woodii - 10
-# Rate: Welwitschia - 7
-# Rate: Arnoldii - 3
-# Rate: Woodii - 5
-# Update: Woodii - 5
-# Reset: Arnoldii
-# Exhibition
-# """
-# input2 = """2
-# Candelabra<->10
-# Oahu<->10
-# Exhibition"""
-# input3 = """"""
-#
-# sys.stdin = StringIO(input1)
+
+import sys
+from io import StringIO
+
+input1 = """3
+Arnoldii<->4
+Woodii<->7
+Welwitschia<->2
+Rate: Woodii - 10
+Rate: Welwitschia - 7
+Rate: Arnoldii - 3
+Rate: Woodii - 5
+Update: Woodii - 5
+Reset: Arnoldii
+Exhibition
+"""
+input2 = """2
+Candelabra<->10
+Oahu<->10
+Exhibition"""
+input3 = """"""
+
+sys.stdin = StringIO(input1)
 
 # plants_rarity = {}
 # plants_rating = {}
@@ -86,6 +86,7 @@
 #         print(f"- {key}; Rarity: {value}; Rating: {rate:.2f}")
 
 
+
 # Решена с Клас
 # class Plant:
 #     def __init__(self, name, rarity):
@@ -139,147 +140,67 @@
 #     print(f'- {plant.name}; Rarity: {plant.rarity}; Rating: {plant.rating():.2f}')
 
 
-# num = int(input())
-# plants = {}
-# for i in range(num):
-#     command = input().split("<->")
-#     plant = command[0]
-#     rarity = int(command[1])
-#
-#     plants[plant] = []
-#     plants[plant].append(rarity)
 
 
-# while True:
-#     command = input()
-#     if command == "Exhibition":
-#         break
-#     current_command = command.split(": ")[0]
-#     second_part = command.split(": ")[1]
-#     if "Rate" in command:
-#         plant_to_be_rated = second_part.split(" - ")[0]
-#         rating_plant = int(second_part.split(" - ")[1])
-#         if plant_to_be_rated not in plants.keys():
-#             print("error")
-#         else:
-#             plants[plant_to_be_rated].append(rating_plant)
-#     elif "Update" in command:
-#         plant_tobe_updated = second_part.split(" - ")[0]
-#         if plant_tobe_updated not in plants.keys():
-#             print("error")
-#         else:
-#             new_rarity = int(second_part.split(" - ")[1])
-#             plants[plant_tobe_updated].pop(0)
-#             plants[plant_tobe_updated].insert(0, new_rarity)
-#     elif "Reset" in command:
-#         plant_to_be_reset = command.split(": ")[1]
-#         if plant_to_be_reset not in plants.keys():
-#             print("error")
-#         else:
-#             rarity_to_add_back = plants[plant_to_be_reset][0]
-#             plants[plant_to_be_reset].clear()
-#             plants[plant_to_be_reset].append(rarity_to_add_back)
-#             # plants[plant_to_be_reset].insert(1, 0)
-#     else:
-#         print("error")
-#
-# for key, value in plants.items():
-#     item_to_amend = value[1:]
-#     remaining_part = value[0]
-#     if len(item_to_amend) > 1:
-#         total = sum(item_to_amend)
-#         new_num = total / len(item_to_amend)
-#         value.clear()
-#         value.append(remaining_part)
-#         value.append(new_num)
-#     if len(value) == 1:
-#         value.append(0)
-#
-# print(f"Plants for the exhibition:")
-# plants = dict(sorted(plants.items(), key=lambda x: (-x[1][0], -x[1][1])))
-# for key, value in plants.items():
-#     print(f"- {key}; Rarity: {int(value[0])}; Rating: {value[1]:.2f}")
-
-import sys
-from io import StringIO
-
-input1 = """3
-Arnoldii<->4
-Woodii<->7
-Welwitschia<->2
-Rate: Woodii - 10
-Rate: Welwitschia - 7
-Rate: Arnoldii - 3
-Rate: Woodii - 5
-Update: Woodii - 5
-Reset: Arnoldii
-Exhibition"""
-input2 = """2
-Candelabra<->10
-Oahu<->10
-Exhibition"""
-input3 = """3
-Arnoldii<->4
-Woodii<->7
-Welwitschia<->2
-Rate: Woodii - 10
-Rate: Welwitschia - 7
-Rate: Arnoldii - 3
-Rate: Woodii - 5
-Update: Woodii - 5
-Reset: Arnoldii
-Exhibition"""
-
-sys.stdin = StringIO(input2)
-
-n = int(input())
+num = int(input())
 plants = {}
-for _ in range(n):
-    data = input()
-    data_split = data.split("<->")
-    plant = data_split[0]
-    rarity = int(data_split[1])
-    if plant not in plants:
-        plants[plant] = []
-    plants[plant] = [rarity]
+for i in range(num):
+    command = input().split("<->")
+    plant = command[0]
+    rarity = int(command[1])
+    # if plant not in plants.keys():
+    plants[plant] = []
+    plants[plant].append(rarity)
+    # else:
+    #     plants[plant] = []
+    #     plants[plant].append(rarity)
 
-command = input()
-while not command == "Exhibition":
-    command_split = command.split(': ')
-    action = command_split[0]
-    if action == "Rate":
-        second_command_split = command_split[1].split(" - ")
-        plant = second_command_split[0]
-        if plant not in plants:
-            print("error")
-        else:
-            rating = int(second_command_split[1])
-            plants[plant].append(rating)
-
-    elif action == "Update":
-        second_command_split = command_split[1].split(" - ")
-        plant = second_command_split[0]
-        if plant not in plants:
-            print("error")
-        else:
-            new_rarity = int(second_command_split[1])
-            plants[plant].pop(0)
-            plants[plant].insert(0,new_rarity)
-
-    elif action == "Reset":
-        second_command_split = command_split[1].split(" - ")
-        plant = second_command_split[0]
-        if plant not in plants:
-            print("error")
-        else:
-            plants[plant] = plants[plant][:1]
-
+while True:
     command = input()
-print("Plants for the exhibition:")
-for key,value in plants.items():
-
-    if len(plants[key][1:]) == 0:
-        print(f"- {key}; Rarity: {value[0]}; Rating: 0.00")
+    if command == "Exhibition":
+        break
+    current_command = command.split(": ")[0]
+    second_part = command.split(": ")[1]
+    if "Rate" in command:
+        plant_to_be_rated = second_part.split(" - ")[0]
+        rating_plant = int(second_part.split(" - ")[1])
+        if plant_to_be_rated not in plants.keys():
+            print("error")
+        else:
+            plants[plant_to_be_rated].append(rating_plant)
+    elif "Update" in command:
+        plant_tobe_updated = second_part.split(" - ")[0]
+        if plant_tobe_updated not in plants.keys():
+            print("error")
+        else:
+            new_rarity = int(second_part.split(" - ")[1])
+            plants[plant_tobe_updated].pop(0)
+            plants[plant_tobe_updated].insert(0, new_rarity)
+    elif "Reset" in command:
+        plant_to_be_reset = command.split(": ")[1]
+        if plant_to_be_reset not in plants.keys():
+            print("error")
+        else:
+            rarity_to_add_back = plants[plant_to_be_reset][0]
+            plants[plant_to_be_reset].clear()
+            plants[plant_to_be_reset].append(rarity_to_add_back)
+            # plants[plant_to_be_reset].insert(1, 0)
     else:
+        print("error")
 
-        print(f"- {key}; Rarity: {value[0]}; Rating: {sum(plants[key][1:])/ len(plants[key][1:]):.2f}")
+for key, value in plants.items():
+    item_to_amend = value[1:]
+    remaining_part = value[0]
+    if len(item_to_amend) > 1:
+        total = sum(item_to_amend)
+        new_num = total / len(item_to_amend)
+        value.clear()
+        value.append(remaining_part)
+        value.append(new_num)
+    if len(value) == 1:
+        value.append(0)
+
+print(f"Plants for the exhibition:")
+plants = dict(sorted(plants.items(), key=lambda x: (-x[1][0], -x[1][1])))
+for key, value in plants.items():
+    print(f"- {key}; Rarity: {int(value[0])}; Rating: {value[1]:.2f}")
